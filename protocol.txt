@@ -1,0 +1,51 @@
+Port: 7777
+Little endian
+ASCII
+
+Reg/Auth: 01
+
+Register
+01 00 <id len (1 byte)> <id> <pwd len (1 byte)> <pwd>
+
+Reg state
+01 01 <Success (0)/ Fail (1) (1 byte)>
+
+login
+01 02 <id len (1 byte)> <id> <pwd len (1 byte)> <pwd>
+
+login state
+01 03 <Success (0)/ Fail (1) (1 byte)>
+
+login out
+01 04
+
+Message: 02
+
+Send Msg
+02 00 <receiver sn (1 byte)> <msg len (1 byte)> <msg>
+receiver sn = 255: boardcase
+
+Open file
+02 01 <receiver sn (1 byte)> <fname len (1 byte)> <file name>
+
+File handle
+02 02 <handle (4 byte)>
+handle = 0xFFFFFFFF: Fail 
+
+file request
+02 03 <handle (4 byte)> <sender sn (1 byte)> <fname len (1 byte)> <file name>
+
+file response
+02 04 <handle (4 byte)> <OK(0) / Reject (1)>
+
+File content
+02 05 <handle (4 byte)> <len (1 byte)> <content>
+
+Close handle
+02 06 <handle (4 byte)>
+
+Control: 03
+
+User
+03 00 <Sn> <id len (1 byte)> <id> <flag>
+flag = 0: offline, 1: online
